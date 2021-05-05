@@ -1,0 +1,10 @@
+input/*.wav
+input/*.ogg
+input/*.mp3
+input/data_set/*
+output/mono_audio/*.wav
+output/prediction_audio/*.wav
+output/prediction_spectrograms/*.jpg
+output/prediction_image/*.jpg
+output/temp_files/*.wav
+output/voice_spectrograms/*/*.jpg
