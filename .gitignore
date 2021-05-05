@@ -1,7 +1,8 @@
 input/*.wav
 input/*.ogg
 input/*.mp3
-input/data_set/*
+input/data_set/*/*/*.ogg
+input/data_set/*/*/*.wav
 output/mono_audio/*.wav
 output/prediction_audio/*.wav
 output/prediction_spectrograms/*.jpg

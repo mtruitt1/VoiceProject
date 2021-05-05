@@ -1,0 +1,2 @@
+# Single clip import folder
+ Any wav, ogg, or mp3 files in this folder are on the GitIgnore. A file placed in here and named "import.wav" or "import.ogg" will be picked up by the network for prediction.

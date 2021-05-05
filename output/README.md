@@ -1,0 +1,2 @@
+# Output folder
+ Subdirectories in this folder contain any files created by the program. The voice_spectrograms subdirectory is the full dataset used by the neural network to train its image classification ability.

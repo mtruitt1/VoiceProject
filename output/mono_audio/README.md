@@ -1,0 +1,2 @@
+# Mono audio folder
+ As with the raw data set folder, converted voice clips in this folder are on the ignore due to potential copyright issues. Clips in this folder are clipped to exactly 5 seconds long, labeled with their necessary category, and are mono-channel wav files.

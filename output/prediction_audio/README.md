@@ -1,0 +1,2 @@
+# Prediction audio folder
+ This is where the AI outputs a single audio clip which it has converted to mono and clipped. Files in this folder are ignored to avoid infringing copyright or to protect a user's privacy.

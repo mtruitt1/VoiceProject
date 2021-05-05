@@ -1,0 +1,2 @@
+# Prediction image folder
+ The program outputs a prediction image to this folder. Although the data lacks any real privacy or copyright concerns, it is nonetheless ignored since it will be overridden anyway.
