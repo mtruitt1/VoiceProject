@@ -1,6 +1,6 @@
-input/*.wav
-input/*.ogg
-input/*.mp3
+input/*/*.wav
+input/*/*.ogg
+input/*/*.mp3
 input/data_set/*/*/*.ogg
 input/data_set/*/*/*.wav
 output/mono_audio/*.wav
