@@ -46,7 +46,9 @@ if __name__ == '__main__':
                     tester.run_full_test(converter, neural, "output", density_threshold)
                 else:
                     bot_instance = VoiceAI(converter, density_threshold, neural, tester, "output")
-                    bot_instance.run(os.getenv('TOKEN'))
+                    print("Please enter your bot token:")
+                    token = input()
+                    bot_instance.run(token)
                     print("VoiceAI is no longer running")
         else:
             print("Please select one of the following options:\n\t1 - Recreate dataset\n\t2 - Train new model\n\t3 - Run single test\n\t4 - Run partial correctness test\n\t5 - Run Discord bot\n\t6 - Stop program")
