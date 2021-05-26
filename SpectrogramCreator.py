@@ -12,6 +12,7 @@ class SpectrogramCreator:
         self.output_folder = out_path
         self.density_thresh = density_thresh
 
+    # converts all wav files in the mono_audio folder to spectograms. used to regenerate the spectrograms when the wav files are still valid
     def convert_wavs(self):
         files = glob.glob(self.output_folder + "/mono_audio/*.wav")
         # success, count, min_info_dens, info_dens_avg, and max_info_dens keep track of the statistics over the conversion process so I have more detailed info on the dataset to tweak the threshold values
@@ -45,6 +46,7 @@ class SpectrogramCreator:
             print(string_prefix + str(round(100 * success / count, 2)) + "%(" + str(success) + "/" + str(count) + ") meet or beat minimum.")
         print("COMPLETE: Lowest info density = " + str(min_info_dens) + " Average info density = " + str(info_dens_avg / count) + " Highest info density = " + str(max_info_dens))
 
+    # creates a single spectrogram using the input wav file path
     def plot_spec(self, input_wav, output):
         Fs = 22050
         x, Fs = librosa.load(input_wav, sr=Fs)

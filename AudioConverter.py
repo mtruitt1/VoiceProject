@@ -5,7 +5,7 @@ import soundfile as sf
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 from SpectrogramCreator import SpectrogramCreator
 
-
+# This class exists to convert audio files into mono-channel 5 second wav files, and then also turn them into spectrograms
 class AudioConverter:
     def __init__(self, clip_length, output_folder):
         self.clip_length = clip_length
@@ -70,13 +70,17 @@ class AudioConverter:
             print(str(round((count / len(files)) * 100, 2)) + "% complete (" + str(count) + "/" + str(len(files)) + ") Total spectrograms: " + str(meets_min) + "(" + str(round(meets_min / count), 2) + "% of checked clips)\n")
         print("COMPLETE: Shortest = " + str(smallest) + " Average = " + str(average / len(files)) + " Longest = " + str(largest))
 
-    # not used for data sets, only for prediction
+    # not used for data sets, only for prediction. returns whether or not the clip is valid, and why
     def import_single(self, file, dens_thresh):
-        sound_file, sample = sf.read(file)
+        try:
+            sound_file, sample = sf.read(file)
+        except:
+            print("File is not an acceptable data type. Please try a different format.")
+            return False, "File is not an acceptable data type. Please try a different format."
         clip_length = len(sound_file) / sample
         if clip_length < self.clip_length:
             print("Clip is not long enough. Needs to be at least 5 seconds long.")
-            return False
+            return False, "Clip is not long enough. Needs to be at least 5 seconds long."
         sf.write(self.output_folder + "/temp_files/wavconvert.wav", sound_file, sample)
         print("Processing " + str(file))
         sound = AudioSegment.from_file(self.output_folder + "/temp_files/wavconvert.wav")
@@ -87,6 +91,6 @@ class AudioConverter:
         ffmpeg_extract_subclip(self.output_folder + "/temp_files/monowav.wav", half_diff, self.clip_length + half_diff, targetname=export_path + ".wav")
         dens_return = SpectrogramCreator(self.output_folder, dens_thresh).plot_spec(export_path + ".wav", "/prediction_spectrograms/prediction.jpg")
         if dens_return < dens_thresh:
-            print("Clip is not info-dense enough.")
-            return False
-        return True
+            print("Clip is not info-dense enough. Please speak more or speak louder.")
+            return False, "Clip is not info-dense enough. Please speak more or speak louder."
+        return True, "Clip is valid."

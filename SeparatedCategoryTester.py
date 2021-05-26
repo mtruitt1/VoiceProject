@@ -5,15 +5,21 @@ import os
 import PredictionImageCreator as ic
 
 
+# Tests single files or 1000 files for partial correctness. Running a single file outputs an image to the predictions folder
 class CategoryTester:
+    # Run a single clip through the neural network and output the "demographics" image. if it doesn't work, it returns the reason why
     def run_single(self, import_path, converter, neural, output_folder, density_threshold):
         if not os.path.exists(import_path):
             print("File does not exist.")
-        converter.import_single(import_path, density_threshold)
-        main_predict, all_predicts, all_names = neural.predict(output_folder + "\\prediction_spectrograms\\prediction.jpg")
-        ic.GenerateImage(all_predicts, main_predict, all_names, output_folder)
+        file_good, reason = converter.import_single(import_path, density_threshold)
+        if file_good:
+            main_predict, all_predicts, all_names = neural.predict(output_folder + "\\prediction_spectrograms\\prediction.jpg")
+            ic.GenerateImage(all_predicts, main_predict, all_names, output_folder)
+            return None
+        else:
+            return reason
 
-    # tests all of the training and testing data by hand to determine more in a more granular manner how correct/incorrect it is
+    # tests all of the training and testing data by hand to determine more in a more granular manner how correct/incorrect it is with partial correctness
     def run_full_test(self, converter, neural, output_folder, density_threshold):
         total_age_wrong = 0
         total_gender_wrong = 0
@@ -25,7 +31,7 @@ class CategoryTester:
         while total_valid < 1000:
             file = random.choice(files)
             print("Testing file \"" + file + "\", assessed " + str(total_valid) + "/1000")
-            file_good = converter.import_single(file, density_threshold)
+            file_good, reason = converter.import_single(file, density_threshold)
             if file_good:
                 path = Path(file)
                 file_name = str.lower(path.name.split('.')[0])

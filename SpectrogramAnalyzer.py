@@ -18,14 +18,17 @@ class ConvNeuralNet:
         self.h5_path = h5_path
         self.names_path = names_path
 
+    # creates a new model and trains it
     def train_new(self, input_shape, data_set_path, batch_size, epochs):
         self.create_model(input_shape)
         self.train(input_shape, data_set_path, batch_size, epochs)
 
+    # trains over an existing model
     def train_existing(self, input_shape, data_set_path, batch_size, epochs):
         self.load_model()
         self.train(input_shape, data_set_path, batch_size, epochs)
 
+    # does the training process, including splitting the data set and configuring the batches
     def train(self, input_shape, data_set_path, batch_size, epochs):
         train_ds = tf.keras.preprocessing.image_dataset_from_directory(
             data_set_path,
@@ -74,6 +77,7 @@ class ConvNeuralNet:
         plt.show()
         self.save_model()
 
+    # predicts for a single image and outputs the info about the prediction to the calling function
     def predict(self, image_path):
         self.load_model()
         img = keras.preprocessing.image.load_img(
@@ -86,11 +90,13 @@ class ConvNeuralNet:
         # print( "This voice clip fits best in the category \"{}\" with a {:.2f} percent confidence.".format(self.class_names[np.argmax(score)], 100 * np.max(score)))
         return self.class_names[np.argmax(score)], score, self.class_names
 
+    # shorthand for the compile function
     def start_model(self):
         self.model.compile(optimizer='adam',
                            loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                            metrics=['accuracy'])
 
+    # creates a new model and starts it
     def create_model(self, input_shape):
         self.model = Sequential([
             layers.experimental.preprocessing.Rescaling(1. / 255, input_shape=input_shape),
@@ -107,6 +113,7 @@ class ConvNeuralNet:
         ])
         self.start_model()
 
+    # loads the model from the file defined on object instantiation
     def load_model(self):
         json_file = open(self.json_path, 'r')
         loaded_model_json = json_file.read()
@@ -117,6 +124,7 @@ class ConvNeuralNet:
         self.model.load_weights(self.h5_path)
         self.start_model()
 
+    # saves the model to the file defined on object instantiation
     def save_model(self):
         model_json = self.model.to_json()
         with open(self.json_path, "w") as model_file:

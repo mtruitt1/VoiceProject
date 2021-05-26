@@ -3,6 +3,8 @@ import numpy as np
 from matplotlib.colors import ListedColormap
 from textwrap import wrap
 
+
+# Generates the image output. Put this function into its own file because it's a mess of MatPlotLib stuff
 def GenerateImage(data, best, class_names, output_folder):
     gender_scale = [0.5, 2, 3.5]
     if not data == None:

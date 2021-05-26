@@ -1,6 +1,5 @@
-input/*/*.wav
-input/*/*.ogg
-input/*/*.mp3
+input/single_clip/*
+!input/single_clip/*md
 input/data_set/*/*/*.ogg
 input/data_set/*/*/*.wav
 output/mono_audio/*.wav
